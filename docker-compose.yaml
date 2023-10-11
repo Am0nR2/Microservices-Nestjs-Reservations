@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  reservation:
+    build: 
+      context: .
+      dockerfile: apps/reservation/Dockerfile
+      target: Development
+    command: npm run start:dev reservation
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - "apps/reservation/.env"
+  auth:
+    build: 
+      context: .
+      dockerfile: apps/auth/Dockerfile
+      target: Development
+    command: npm run start:dev auth
+    ports:
+      - "3001:3001"
+    env_file:
+      - "apps/auth/.env"
+    volumes:
+      - .:/usr/src/app
+  payments: 
+    build: 
+      context: .
+      dockerfile: apps/payments/Dockerfile
+      target: Development
+    command: npm run start:dev payments
+    env_file:
+      - apps/payments/.env
+    ports:
+      - "3003:3003"
+    volumes:
+      - .:/usr/src/app
+  notifications:
+    build: 
+      context: .
+      dockerfile: apps/notifications/Dockerfile
+      target: Development
+    command: npm run start:dev notifications
+    env_file:
+      - apps/notifications/.env
+    volumes:
+      - .:/usr/src/app
+  mongo:
+    image: mongo:latest
+    
